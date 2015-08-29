@@ -138,7 +138,7 @@ angular.module('rideshareApp')
           return;
         }
         vm.driver.waypoints.push({
-          location:places[0].formatted_address,
+          location:places[0].address_components[0].short_name,
           latlang:new google.maps.LatLng(places[0].geometry.location.G, places[0].geometry.location.K),
           stopover: true
 
