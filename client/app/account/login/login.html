@@ -1,0 +1,98 @@
+<md-whiteframe class="md-whiteframe-z0 login" lyaout-padding layout="column" layout-align="center center" >
+  <form class="form" name="form" ng-submit="vm.login(form)" novalidate>
+  <md-card class="md-padding" layout="column" layout-align="center center" >
+
+      <md-card-content layout="column" layout-align="center center" style="width: 100%;">
+        <h2 class="md-title" style="padding: 0px;">Login</h2>
+        <md-divider style="padding: 0px;"></md-divider>
+        <img src="assets/images/avatar.jpg" class="md-avatar" style="width:100px;border-radius: 50%;">
+        <md-input-container class="md-icon-float" >
+          <!-- Use floating label instead of placeholder -->
+          <label>username or email</label>
+          <md-icon  md-font-set="fa fa-user fa-2x  " class="name"></md-icon>
+          <input ng-model="vm.user.email" type="text" required>
+        </md-input-container>
+        <md-input-container class="md-icon-float" >
+          <!-- Use floating label instead of placeholder -->
+          <label>password</label>
+          <md-icon  md-font-set="fa fa-unlock fa-2x  " class="name"></md-icon>
+          <input ng-model="vm.user.password" type="password" required>
+        </md-input-container>
+        <md-button class="md-raised md-primary" type="submit">Sign in <i class="fa fa-sign-in"></i></md-button>
+        <md-list style="padding-top: 0px;padding-bottom: 0px;">
+          <md-list-item>
+            <md-checkbox ng-model="user.sign" class="md-primary"></md-checkbox>
+            <p>Stay signed in</p>
+          </md-list-item>
+        </md-list>
+        <md-divider style="padding: 0px;"></md-divider>
+      </md-card-content>
+
+      <div class="md-actions" layout="row" layout-align="space-between end" style="padding-top:0px;padding-bottom: 0px;">
+        <p ><a href="javascript:void(0)">Need help?</a></p>
+        <p ><a ui-sref="main.signup">Create an account</a></p>
+      </div>
+    </md-card>
+    </form>
+</md-whiteframe>
+
+
+<!--<div class="container">-->
+  <!--<div class="row">-->
+    <!--<div class="col-sm-12">-->
+      <!--<h1>Login</h1>-->
+      <!--<p>Accounts are reset on server restart from <code>server/config/seed.js</code>. Default account is <code>test@test.com</code> / <code>test</code></p>-->
+      <!--<p>Admin account is <code>admin@admin.com</code> / <code>admin</code></p>-->
+    <!--</div>-->
+    <!--<div class="col-sm-12">-->
+      <!--<form class="form" name="form" ng-submit="login(form)" novalidate>-->
+
+        <!--<div class="form-group">-->
+          <!--<label>Email</label>-->
+
+          <!--<input type="email" name="email" class="form-control" ng-model="user.email" required>-->
+        <!--</div>-->
+
+        <!--<div class="form-group">-->
+          <!--<label>Password</label>-->
+
+          <!--<input type="password" name="password" class="form-control" ng-model="user.password" required>-->
+        <!--</div>-->
+
+        <!--<div class="form-group has-error">-->
+          <!--<p class="help-block" ng-show="form.email.$error.required && form.password.$error.required && submitted">-->
+             <!--Please enter your email and password.-->
+          <!--</p>-->
+          <!--<p class="help-block" ng-show="form.email.$error.email && submitted">-->
+             <!--Please enter a valid email.-->
+          <!--</p>-->
+
+          <!--<p class="help-block">{{ errors.other }}</p>-->
+        <!--</div>-->
+
+        <!--<div>-->
+          <!--<button class="btn btn-inverse btn-lg btn-login" type="submit">-->
+            <!--Login-->
+          <!--</button>-->
+          <!--<a class="btn btn-default btn-lg btn-register" ui-sref="main.signup">-->
+            <!--Register-->
+          <!--</a>-->
+        <!--</div>-->
+
+        <!--<hr>-->
+        <!--<div>-->
+          <!--<a class="btn btn-facebook" href="" ng-click="loginOauth('facebook')">-->
+            <!--<i class="fa fa-facebook"></i> Connect with Facebook-->
+          <!--</a>-->
+          <!--<a class="btn btn-google-plus" href="" ng-click="loginOauth('google')">-->
+            <!--<i class="fa fa-google-plus"></i> Connect with Google+-->
+          <!--</a>-->
+          <!--<a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">-->
+            <!--<i class="fa fa-twitter"></i> Connect with Twitter-->
+          <!--</a>-->
+        <!--</div>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<hr>-->
+<!--</div>-->

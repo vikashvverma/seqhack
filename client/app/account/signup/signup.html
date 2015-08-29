@@ -1,0 +1,144 @@
+
+
+<md-card flex-sm="100" flex-md="100" flex-gt-sm="50">
+  <img ng-src="{{imagePath}}" class="md-card-image" alt="">
+  <md-card-content>
+    <md-content layout-padding class="autoScroll">
+      <form name="registrationform" novalidate>
+
+        <md-toolbar>
+          <div class="md-toolbar-tools md-primary ">
+            <h2>
+              <span>Basic Information</span>
+            </h2>
+          </div>
+        </md-toolbar>
+
+        <md-content class="md-padding">
+          <div layout layout-sm="column" layout-md="column">
+            <md-input-container class="input-field" flex>
+              <i class="fa fa-user prefix blue-text"></i>
+              <input ng-model="vm.user.first_name" id="first_name" type="text" class="validate" ng-required="true" aria-label="First Name">
+              <label for="first_name">First Name</label>
+            </md-input-container>
+            <md-input-container class="input-field" flex >
+              <i class="fa fa-user prefix blue-text"></i>
+              <input ng-model="vm.user.last_name" id="last_name" type="text" class="validate" ng-required="true" aria-label="Last Name">
+              <label for="last_name">Last Name</label>
+            </md-input-container>
+          </div>
+
+          <div layout layout-sm="column" layout-md="column">
+            <md-input-container class="input-field" flex>
+              <label for="dob">Date of Birth
+              </label>
+              <i class="fa fa-birthday-cake prefix blue-text"></i>
+              <input ng-model="vm.user.dob"  ng-click="clicked();" type="date" id="dob" class=" datepicker" ng-required="true" aria-label="Date of Birth"/>
+
+            </md-input-container>
+            <md-input-container class="input-field" flex>
+              <i class="fa fa-phone prefix blue-text"></i>
+              <input ng-model="vm.user.mobile" type="tel" id="mobile" class="validate" ng-required="true" aria-label="Mobile Number"/>
+              <label for="mobile">Mobile Number.</label>
+            </md-input-container>
+            <md-radio-group ng-model="vm.user.gender"  style="display:inline-flex;border: 0px dotted transparent; ">
+              <span style="line-height:500%;">Gender</span>
+              <md-radio-button value="M" aria-label="Male" class="md-primary"><i class="fa fa-male fa-3x indigo-text" style="color:dodgerblue;"></i></md-radio-button>
+              <md-radio-button value="F" aria-label="Female" class="md-accent"> <i class="fa fa-female fa-3x pink-text " style="color:deeppink;"></i> </md-radio-button>
+            </md-radio-group>
+          </div>
+          <md-radio-group ng-init="vm.user.type='rider'" ng-model="vm.user.type"  style="display:inline-flex;border: 0px dotted transparent; ">
+            <span style="line-height:500%;">Register as </span>
+            <md-radio-button value="driver" aria-label="Male" class="md-primary"><i class="fa fa-car fa-3x indigo-text" style="color:dodgerblue;"></i></md-radio-button>
+            <md-radio-button value="rider" aria-label="Female" class="md-accent"> <i class="fa fa-user fa-3x pink-text " style="color:#1976d2;"></i> </md-radio-button>
+          </md-radio-group>
+
+          <md-content class="md-padding" ng-if="vm.user.type=='driver'">
+
+            <div layout layout-sm="column" layout-md="column">
+
+              <md-input-container class="input-field" flex>
+                <label for="cab">Cab
+                </label>
+                <i class="fa fa-cab prefix blue-text"></i>
+                <input ng-model="vm.user.cab.name"   type="text" id="cab" class="validate" ng-required="true" aria-label="Name"/>
+
+              </md-input-container>
+
+              <md-input-container class="input-field" flex>
+                <label for="cabType">Cab Type
+                </label>
+                <i class="fa fa-cab prefix blue-text"></i>
+                <input ng-model="vm.user.cab.type"   type="text" id="cabType" class="validate" ng-required="true" aria-label="Type"/>
+
+              </md-input-container>
+
+              <md-input-container class="input-field" flex>
+                <label for="dob">Cab Number
+                </label>
+                <i class="fa fa-cab prefix blue-text"></i>
+                <input ng-model="vm.user.cab.number"   id="cabNumber" class="validate" ng-required="true" aria-label="Number"/>
+
+              </md-input-container>
+
+
+
+            </div>
+
+
+
+          </md-content>
+
+
+          <md-toolbar md-theme="bitsaaTheme" class="md-warn">
+            <div class="md-toolbar-tools md-primary ">
+              <h2>
+                <span>Login Information</span>
+              </h2>
+            </div>
+          </md-toolbar>
+          <md-content class="md-padding">
+
+            <div layout layout-sm="column" layout-md="column">
+
+              <md-input-container class="input-field" flex>
+
+                <input ng-model="vm.user.username" id="username" type="text" class="validate" ng-required="true" aria-label="Username">
+                <label for="username">username</label>
+              </md-input-container>
+              <md-input-container class="input-field" flex>
+                <input ng-model="vm.user.email" id="email" type="email" class="validate" ng-required="true" aria-label="Email">
+                <label for="email">Email ID</label>
+              </md-input-container>
+              <md-input-container class="input-field" flex>
+                <input ng-model="vm.user.password" id="password" type="password" class="validate" ng-required="true" ng-minlength="6" aria-label="Password">
+                <label for="password">Password</label>
+              </md-input-container>
+
+              <md-input-container class="input-field" flex>
+                <input ng-model="vm.user.cPassword" id="cPassword" type="password" class="validate" ng-required="true" ng-minlength="6" aria-label="Confirm Password">
+                <label for="cPassword">Confirm Password</label>
+              </md-input-container>
+
+            </div>
+
+
+
+            <md-button md-theme="bitsaaTheme" class="md-raised md-primary waves-effect waves-light left-align " ng-click="vm.register(registrationform);" ng-disabled="uploading">Join Us <i class="fa fa-send "></i></md-button>
+
+
+          </md-content>
+      </form>
+    </md-content>
+<md-divider></md-divider>
+    <div class="social-buttons">
+      <a href="#" class="social-button label" style="width:auto !important;box-shadow:none;"><md-button md-ink-ripple='#FFF' class="md-raised md-primary">Try Social Signup</md-button></a>
+      <a href="" class="social-button facebook" ng-click="vm.loginOauth('facebook')"><i class="fa fa-facebook"></i></a><a href="#" class="social-button twitter" ng-click="vm.loginOauth('twitter')"><i class="fa fa-twitter"></i></a><a href="#" class="social-button google" ng-click="vm.loginOauth('google')"><i class="fa fa-google"></i></a>
+    </div>
+  </md-card-content>
+
+  <div class="md-actions" layout="row" layout-align="end center">
+
+
+  </div>
+</md-card>

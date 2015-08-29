@@ -1,0 +1,128 @@
+.nav-bar{
+  background-color: #1976d2;
+}
+
+md-fab-speed-dial .md-button  {
+  /*background-color: #3B5998;*/
+}
+md-fab-speed-dial .md-button:hover{
+  /*background-color: rgb(255,64,129) !important;*/
+}
+md-fab-speed-dial .md-button md-icon.google{
+  color: #DC4A38 !important;
+}
+md-fab-speed-dial .md-button.google:hover,md-fab-speed-dial .md-button md-icon.google:hover{
+  background-color: #DC4A38 !important;
+  color: #fff !important;
+}
+md-fab-speed-dial .md-button md-icon.facebook{
+  color: #3B5998 !important;
+}
+md-fab-speed-dial .md-button.facebook:hover,md-fab-speed-dial .md-button md-icon.facebook:hover{
+  background-color: #3B5998 !important;
+  color:#fff !important;
+}
+md-whiteframe.second{
+  background-color: #333;
+  margin-top: 5px;
+}
+
+md-whiteframe.second md-list md-list-item .md-list-item-text h3{
+  color:#fff;
+  font-family: 'Raleway', Arial, Helvetica, sans-serif;
+  font-size: 22px;
+}
+md-whiteframe.second md-list md-list-item .md-list-item-text h4{
+  color:#fff;
+  font-size: 16px;
+}
+md-whiteframe.second md-list md-list-item .md-list-item-text p{
+  color:#8c8c8c;
+}
+md-whiteframe.second md-list md-list-item md-icon{
+  padding-top: 10px;
+  padding-left: 10px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  color:white;
+}
+
+md-whiteframe.third{
+  background-color: #1c1c1c;
+}
+.head-title{
+  font-size:40px;
+  color:#fff;
+  display: block;
+  text-align: center;
+  text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+.tag-line{
+  color:#fff;
+  display: block;
+  text-align: center;
+  margin-top:-25px;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+  0px -5px 35px rgba(255,255,255,0.3);
+}
+.head-list{
+  color:#fff;
+}
+.head-list md-list-item{
+min-height: 30px !important;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  height:40px !important;
+}
+.head-list md-list-item md-icon{
+  color:#fff;
+  margin-right: 5px;
+}
+input[name^="dob"] { width:100%; }
+md-input-container md-select-label{
+  width:100%;
+}
+
+md-content.md-default-theme {
+  /*background-color: #eee;*/
+}
+
+md-card {
+  background-color: #fff;
+}
+md-card h2:first-of-type {
+  margin-top: 0;
+}
+
+md-toolbar .md-button.md-default-theme {
+  border-radius: 99%;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+.md-toolbar-tools-bottom {
+  font-size: small;
+}
+.md-toolbar-tools-bottom :last-child {
+  opacity: 0.8;
+}
+
+md-toolbar:not(.md-hue-1),
+.md-fab {
+  fill: #fff;
+}
+
+md-sidenav {
+  fill: #737373;
+}
+md-sidenav ng-md-icon {
+  position: relative;
+  top: 5px;
+}
+
+.user-avatar {
+  border-radius: 99%;
+}

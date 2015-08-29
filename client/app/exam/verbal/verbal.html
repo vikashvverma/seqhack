@@ -1,0 +1,25 @@
+<md-whiteframe class="md-whiteframe-z2" layout layout-align="center center" layout-padding layout-sm="column" layout-gt-sm="row">
+<md-card ng-repeat="test in vm.tests">
+  <img ng-src="{{test.image}}" class="md-card-image" alt="Washed Out">
+  <md-card-content>
+    <h2 class="md-title">{{test.title}}</h2>
+    <p>{{test.content}}
+    </p>
+  </md-card-content>
+  <md-divider></md-divider>
+  <div class="md-actions" layout="row" layout-align="start start">
+    <md-list style="padding-top: 0px;padding-bottom: 0px;">
+      <md-list-item>
+        <a ui-sref="{{test.link}}">Start Test</a>
+      </md-list-item>
+    </md-list>
+    <md-list style="padding-top: 0px;padding-bottom: 0px;">
+      <md-list-item>
+
+        <label>Learn More <md-icon md-font-set="fa fa-external-link " style="height: inherit;"></md-icon></label>
+      </md-list-item>
+    </md-list>
+  </div>
+</md-card>
+
+</md-whiteframe>

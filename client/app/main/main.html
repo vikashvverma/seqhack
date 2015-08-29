@@ -1,0 +1,179 @@
+<div layout="column" style="/*padding-bottom: 15px;*/" class="main">
+  <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" style="z-index:1001;"
+              ng-click="vm.toggleSidenav('left');">
+    <md-toolbar class="md-tall ">
+      <span flex></span>
+
+      <div layout="column" class="md-toolbar-tools-bottom inset">
+        <user-avatar></user-avatar>
+        <span></span>
+
+        <div>{{vm.getCurrentUser().first_name}} {{vm.getCurrentUser().last_name}}</div>
+        <div>{{vm.getCurrentUser().email}}</div>
+      </div>
+    </md-toolbar>
+    <md-list>
+      <md-list-item ng-repeat="item in vm.mainMenu" md-ink-ripple='#03A9F4' style="cursor: pointer;">
+        <a ui-sref="{{item.url}}" style="width: 100%;text-decoration: none;color: rgba(0, 0, 0, 0.87);">
+          <!--<img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />-->
+          <p>{{ item.title }}</p>
+          <md-icon md-font-set="{{item.icon}}" ng-click="doSecondaryAction($event)" aria-label="Open Chat"
+                   class="md-secondary md-hue-3" ng-class="{'md-primary': person.newMessage}"
+                   style="margin-top: 0px;"></md-icon>
+        </a>
+      </md-list-item>
+      <md-divider></md-divider>
+      <!--<md-subheader>Management</md-subheader>-->
+      <md-list-item ng-repeat="item in vm.extraMenu" md-ink-ripple='#03A9F4' style="cursor: pointer;">
+        <!--<img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />-->
+        <md-icon md-font-set="{{item.icon}}" ng-click="doSecondaryAction($event)" aria-label="Open Chat"
+                 class=" md-hue-3" ng-class="{'md-primary': person.newMessage}" style="margin-top: 0px;"></md-icon>
+        <p>{{ item.title }}</p>
+
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-sidenav layout="column" class="md-sidenav-right md-whiteframe-z2" md-component-id="right" style="z-index:1001;">
+    <md-toolbar class="md-tall ">
+      <span flex></span>
+
+      <div layout="column" class="md-toolbar-tools-bottom inset">
+        <user-avatar></user-avatar>
+        <span></span>
+
+        <div>{{vm.getCurrentUser().first_name}} {{vm.getCurrentUser().last_name}}</div>
+        <div>{{vm.getCurrentUser().email}}</div>
+      </div>
+    </md-toolbar>
+    <md-list>
+      <md-list-item ng-click="vm.logout();">
+        <md-icon md-font-set="fa fa-sign-out fa-2x "></md-icon>
+        <p> Logout </p>
+      </md-list-item>
+      <md-list-item ng-repeat="item in vm.userMenu" ng-click="goToPerson(person.name, $event)">
+        <md-icon md-font-set="{{item.icon}}"></md-icon>
+        <p> {{item.title}} </p>
+        <!--<md-item-content md-ink-ripple layout="row" layout-align="start center">-->
+        <!--<div class="inset">-->
+        <!--<md-icon md-font-set="{{item.icon}}"></md-icon>-->
+        <!--&lt;!&ndash;<ng-md-icon icon="{{item.icon}}"></ng-md-icon>&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="inset">{{item.title}}-->
+        <!--</div>-->
+        <!--</md-item-content>-->
+        <!--<md-icon md-svg-icon="communication:messenger" ng-click="doSecondaryAction($event)" aria-label="Open Chat" class="md-secondary md-hue-3" ng-class="{'md-primary': person.newMessage}"></md-icon>-->
+      </md-list-item>
+      <md-divider></md-divider>
+      <md-subheader>Management</md-subheader>
+      <md-item ng-repeat="item in admin">
+        <a>
+          <md-item-content md-ink-ripple layout="row" layout-align="start center">
+            <div class="inset">
+              <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+            </div>
+            <div class="inset">{{item.title}}
+            </div>
+          </md-item-content>
+        </a>
+      </md-item>
+    </md-list>
+  </md-sidenav>
+
+  <md-toolbar rideshare-header style="position:fixed;z-index:1000;">
+    <div class="md-toolbar-tools ">
+      <md-button class="md-icon-button" aria-label="Settings" ng-click="vm.toggleSidenav('left')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 18 18" fit=""
+             preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: block;">
+          <path d="M0 0h18v18h-18z" fill="none"></path>
+          <path d="M2 13.5h14v-1.5h-14v1.5zm0-4h14v-1.5h-14v1.5zm0-5.5v1.5h14v-1.5h-14z"></path>
+        </svg>
+      </md-button>
+      <h2>
+        <span ui-sref="main" style="cursor: pointer;">RideShare</span>
+      </h2>
+      <span flex=""></span>
+
+
+      <md-list>
+        <md-list-item aria-label="Open phone interactions menu" class="md-icon-button">
+          <user-avatar ng-if="vm.isLoggedIn()" ng-click="vm.toggleSidenav('right')"></user-avatar>
+          <img ng-if="!vm.isLoggedIn()" src="assets/images/avatar_2x.png" class="md-avatar" style="margin-right:0;"
+               ui-sref="main.login"/>
+        </md-list-item>
+      </md-list>
+
+    </div>
+  </md-toolbar>
+
+  <md-content rideshare-content style="margin-top:64px;min-height: calc(100vh - 128px)" ui-view>
+
+
+    <md-whiteframe class="md-whiteframe-z1 " layout layout-pdding layout-align="center center">
+      <md-content style="width:100%;background: inherit;">
+        <!--<h1 class="head-title">-->
+        <!--<md-button class="md-raised md-primary">Ride</md-button>-->
+        <!--</h1>-->
+        <!--<h5 class="tag-line">-->
+        <!--<md-button class="md-raised md-primary">Share</md-button>-->
+        <!--</h5>-->
+        <md-content layout="column" style=";z-index:111;width:100%;background:transparent;">
+
+
+          <md-content layout-sm="column" layout-gt-sm="row">
+            <md-input-container class="input-field" flex>
+              <input ng-model="vm.driver.src" id="source" type="text" class="validate" aria-label="Source"
+                     style="background-color:white;" placeholder="Enter Source">
+              <label for="source" style="text-align:center;">Source</label>
+            </md-input-container>
+            <md-chips ng-model="vm.driver.waypoints" placeholder="Enter a waypoint"
+                      delete-button-label="Remove waypoint"
+                      delete-hint="Press delete to remove waypoint"
+                      secondary-placeholder="+Waypoint" id="waypoints">
+              <md-chip-template>
+                <strong>{{$chip}}</strong>
+                <em>(via)</em>
+              </md-chip-template>
+            </md-chips>
+            <md-input-container class="input-field" flex>
+              <input ng-model="vm.driver.target" id="target" type="text" class="validate" aria-label="Source"
+                     style="background-color:white;">
+              <label for="source" style="text-align:center;">Source</label>
+            </md-input-container>
+          </md-content>
+
+        </md-content>
+        <!--<input id="pac-input" class="controls" type="text" placeholder="Search Box">-->
+        <div id="map" style="height:400px;margin-top:-79px;"></div>
+      </md-content>
+    </md-whiteframe>
+
+
+  </md-content>
+  <div style="bottom: 0;right:0;position: fixed;z-index: 1002;">
+
+    <md-fab-speed-dial md-open="false" md-direction="up"
+                       class="md-fling">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-warn">
+          <md-icon md-font-set="fa fa-bars fa-2x " style="vertical-align: text-bottom;"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <md-button aria-label="facebook" class="md-fab md-raised md-mini  facebook">
+          <md-icon md-font-set="fa fa-facebook fa-2x  " class="facebook"></md-icon>
+        </md-button>
+        <md-button aria-label="Google+" class="md-fab md-raised md-mini google">
+          <md-icon md-font-set="fa fa-google-plus fa-2x " class="google"></md-icon>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+  </div>
+  <md-toolbar style="background-color: #202020;">
+
+    <span style="text-align: center;font-size:14px;line-height: 64px;">&copy; <a href="http://www.programminggeek.in"
+                                                                                 target="_blank"
+                                                                                 style="color:#428bca;text-decoration: none;">
+      Programming Geek</a>, All Rights Reserved</span>
+  </md-toolbar>
+</div>

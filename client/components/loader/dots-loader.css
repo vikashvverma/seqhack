@@ -1,0 +1,85 @@
+.dots-loader {
+  display: block;
+}
+.dots-loader span {
+  display: inline-block;
+  position: absolute;
+  /*top: 50%;*/
+  margin-top: -3px;
+  width: 6px;
+  height: 6px;
+  background-color: #ffc40d;
+  -webkit-border-radius: 1000px;
+  -moz-border-radius: 1000px;
+  border-radius: 1000px;
+}
+.dots-loader span {
+  -webkit-animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+.dots-loader span:nth-child(2) {
+  -webkit-animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s 270ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+.dots-loader span:nth-child(3) {
+  -webkit-animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s 540ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+.dots-loader span:nth-child(4) {
+  -webkit-animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s 810ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+.dots-loader span:nth-child(5) {
+  -webkit-animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s 1080ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+.dots-loader span:nth-child(6) {
+  -webkit-animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  -moz-animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+  animation: move 2.5s 1350ms infinite cubic-bezier(0.2, 0.64, 0.81, 0.23);
+}
+
+@-webkit-keyframes move {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  25%,75% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@-moz-keyframes move {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  25%,75% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+@keyframes move {
+  0% {
+    left: 0%;
+    opacity: 0;
+  }
+  25%,75% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
