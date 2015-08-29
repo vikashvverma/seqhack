@@ -1,0 +1,35 @@
+<md-whiteframe class="md-whiteframe-z1 " layout layout-pdding layout-align="center center">
+  <md-content style="width:100%;background: inherit;">
+    <md-content layout="column" style=";z-index:111;width:100%;background:transparent;">
+
+
+      <md-content layout-sm="column" layout-gt-sm="row">
+        <md-input-container class="input-field" flex>
+          <input ng-model="vm.driver.src" id="source" type="text" class="validate" aria-label="Source"
+                 style="background-color:white;" placeholder="Enter Source">
+          <label for="source" style="text-align:center;">Source</label>
+        </md-input-container>
+        <md-chips ng-model="vm.driver.waypoints" readonly="false">
+          <md-chip-template>
+            <strong>{{$chip.location}}</strong>
+            <em>(via)</em>
+          </md-chip-template>
+        </md-chips>
+        <md-input-container class="input-field" flex>
+          <input ng-model="vm.driver.way" id="way" type="text" class="validate" aria-label="Source"
+                 style="background-color:white;" placeholder="Waypoints">
+          <!--<label for="way" style="text-align:center;">WayPoints</label>-->
+        </md-input-container>
+
+        <md-input-container class="input-field" flex>
+          <input ng-model="vm.driver.destinatio" id="destination" type="text" class="validate" aria-label="Source"
+                 style="background-color:white;">
+          <label for="source" style="text-align:center;">Destination</label>
+        </md-input-container>
+      </md-content>
+
+    </md-content>
+    <!--<input id="pac-input" class="controls" type="text" placeholder="Search Box">-->
+    <div id="map" style="height:400px;margin-top:-79px;"></div>
+  </md-content>
+</md-whiteframe>
