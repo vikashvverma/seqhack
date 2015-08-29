@@ -121,24 +121,30 @@
 
 
           <md-content layout-sm="column" layout-gt-sm="row">
+
+
+
             <md-input-container class="input-field" flex>
               <input ng-model="vm.driver.src" id="source" type="text" class="validate" aria-label="Source"
                      style="background-color:white;" placeholder="Enter Source">
               <label for="source" style="text-align:center;">Source</label>
             </md-input-container>
-            <md-chips ng-model="vm.driver.waypoints" placeholder="Enter a waypoint"
-                      delete-button-label="Remove waypoint"
-                      delete-hint="Press delete to remove waypoint"
-                      secondary-placeholder="+Waypoint" id="waypoints">
+            <md-chips ng-model="vm.driver.waypoints" readonly="false">
               <md-chip-template>
-                <strong>{{$chip}}</strong>
+                <strong>{{$chip.location}}</strong>
                 <em>(via)</em>
               </md-chip-template>
             </md-chips>
             <md-input-container class="input-field" flex>
-              <input ng-model="vm.driver.target" id="target" type="text" class="validate" aria-label="Source"
+              <input ng-model="vm.driver.way" id="way" type="text" class="validate" aria-label="Source"
+                     style="background-color:white;" placeholder="Waypoints">
+              <!--<label for="way" style="text-align:center;">WayPoints</label>-->
+            </md-input-container>
+
+            <md-input-container class="input-field" flex>
+              <input ng-model="vm.driver.destinatio" id="destination" type="text" class="validate" aria-label="Source"
                      style="background-color:white;">
-              <label for="source" style="text-align:center;">Source</label>
+              <label for="source" style="text-align:center;">Destination</label>
             </md-input-container>
           </md-content>
 
