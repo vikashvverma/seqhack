@@ -13,6 +13,7 @@ router.post('/book/ride/:id',controller.bookRide);
 router.get('/get/ride/:userId',controller.getRides);
 router.get('/:userId',controller.fetchAllRides);
 router.get('/rides/:from/:to',controller.fetchRides);
+router.get('/approve/:userId/:id',controller.approve);
 
 
 module.exports = router;

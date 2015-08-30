@@ -76,6 +76,29 @@ console.log(out);
   });
 };
 
+exports.approve = function (req, res) {
+  console.log(req.params.userId);
+  Drive.findOne({userId: req.params.userId}, function (err, data) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!data) {
+      return res.send(404);
+    }
+    for(var i=0;i<data.requests.length;i++){
+      if(data.requests[i].id==req.params.id){
+        data.requests[i].allocated=true;
+        data.save(function(err,data){
+          if(err){return res.send(404);}
+          return res.json(data);
+        })
+        break;
+      }
+    }
+
+  });
+};
+
 exports.fetchAllRides = function (req, res) {
   console.log(req.params.userId);
   Drive.findOne({userId: req.params.userId}, function (err, data) {

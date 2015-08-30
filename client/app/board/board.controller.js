@@ -20,9 +20,15 @@ angular.module('rideshareApp')
     vm.riding={status:false,rides:[]};
     vm.requests=[];
     vm.count=0;
+    vm.allocated=false;
     vm.getBookedCabs=function(){
       DriveService.getRides(vm.getCurrentUser()._id)
         .success(function(data){
+          if(data.length && data[0].data && !vm.allocated){
+            data[0].data.requests.filter(function(obj){
+              return obj.id==Auth.getCurrentUser()._id;
+            }).length?vm.allocated=true:'';
+          }
           if(data.length && data.length!=vm.riding.rides.length){
             vm.requests=data;
             vm.riding.rides=data||[];

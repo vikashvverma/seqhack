@@ -20,6 +20,15 @@ angular.module('rideshareApp')
           $q.reject(err);
         });
       },
+      approve:function(userId,id){
+        return $http.get('/api/drives/approve/'+userId+'/'+id).success(function(data){
+          $log.info(data.data);
+          $q.resolve(data.data);
+        }).error(function(err){
+          $log.error(err);
+          $q.reject(err);
+        });
+      },
       getRide:function(userId){
         return $http.get('/api/drives/'+userId).success(function(data){
           $log.info(data.data);

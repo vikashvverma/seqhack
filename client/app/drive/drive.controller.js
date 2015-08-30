@@ -16,6 +16,15 @@ angular.module('rideshareApp')
     vm.drive=null;
     vm.driving={status:false};
     vm.count=0;
+    vm.approve= function (id) {
+      DriveService.approve(vm.getCurrentUser()._id,id)
+        .success(function(data){
+          DriveService.notify('Request Approved!');
+        })
+        .error(function(err){
+
+        });
+    };
     vm.getRide=function(){
       DriveService.getRide(vm.getCurrentUser()._id).then(function(data){
         $log.info(data);
@@ -37,7 +46,7 @@ angular.module('rideshareApp')
     };
     var interval=$interval(function () {
       vm.getRide();
-    },2000);
+    },20000);
     $scope.$on('$destroy', function() {
       $interval.cancel(interval);
     });

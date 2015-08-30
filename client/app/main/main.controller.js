@@ -20,12 +20,6 @@ angular.module('rideshareApp')
         title: "Profile",
         tooltip: "Verbal Test",
         url: 'main.verbal'
-      },
-      {
-        icon: "fa fa-lock fa-2x",
-        title: "Aptitude",
-        tooltip: "Aptitude Test",
-        url: 'main.aptitude'
       }
     ];
     vm.extraMenu=[{
