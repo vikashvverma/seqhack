@@ -1,9 +1,10 @@
 <md-whiteframe class="md-whiteframe-z1 " layout layout-pdding layout-align="center center">
-  <md-content style="width:100%;background: inherit;">
-    <md-content layout="column" style=";z-index:111;width:100%;background:transparent;">
+
+  <md-content style="width:100%;background: inherit;" >
+    <md-content layout="column" style=";z-index:111;width:100%;background:transparent;" >
 
 
-      <md-content layout-sm="column" layout-gt-sm="row">
+      <md-content layout-sm="column" layout-gt-sm="row" ng-if="!vm.driving.status">
         <md-input-container class="input-field" flex>
           <input ng-model="vm.driver.src" id="source" type="text" class="validate" aria-label="Source"
                  style="background-color:white;" placeholder="Enter Source">
@@ -28,8 +29,80 @@
         </md-input-container>
       </md-content>
 
-    </md-content>
+
     <!--<input id="pac-input" class="controls" type="text" placeholder="Search Box">-->
-    <div id="map" style="height:400px;margin-top:-79px;"></div>
+    <div id="map" style="height:400px;"></div>
+      <md-content layout-sm="column" layout-gt-sm="row" ng-if="!vm.driving.status">
+        <md-input-container class="input-field" flex>
+          <input ng-model="vm.driver.seats" id="seats" type="Number" class="validate" aria-label="Source"
+                 style="background-color:white;">
+          <label for="seats" style="text-align:center;">Seats Available</label>
+        </md-input-container>
+        <md-radio-group ng-model="vm.driver.sharewith"  style="display:inline-flex;border: 0px dotted transparent; ">
+          <span style="line-height:500%;">ShareWith</span>
+          <md-radio-button value="M" aria-label="Male" class="md-primary"><i class="fa fa-male fa-3x indigo-text" style="color:dodgerblue;"></i></md-radio-button>
+          <md-radio-button value="F" aria-label="Female" class="md-accent"> <i class="fa fa-female fa-3x pink-text " style="color:deeppink;"></i> </md-radio-button>
+          <md-radio-button value="B" aria-label="Both" class="md-accent"> <i class="fa fa-user fa-3x  md-primary" style="color:dodgerblue"></i> </md-radio-button>
+        </md-radio-group>
+        <md-button class="md-primary md-raised " ng-click="vm.createRide($event);">Create Ride</md-button>
+        </md-content>
   </md-content>
+    <md-card flex>
+      <!--<img ng-src="{{test.image}}" class="md-card-image" alt="image">-->
+      <md-card-content>
+        <h2 class="md-title md-primary">Drive Info</h2>
+        <p  id="drivedescription"> </p>
+      </md-card-content>
+      <md-divider></md-divider>
+
+      <div class="md-actions" layout="row" layout-align="space-between end">
+        <footer class="tcs-card__footer" >
+          <!--<span class="icon"><i class="fa fa-clock-o"></i> {{note.created_on | date:'dd/mm/yyyy'}}</span>-->
+        </footer>
+      <span>
+      <md-button class="md-fab md-primary" aria-label="Share" >
+        <md-tooltip>
+          Share
+        </md-tooltip>
+        <md-icon md-font-set="fa fa-share-alt fa-2x" class="nav"></md-icon>
+      </md-button>
+      <md-button class="md-fab md-primary" aria-label="Edit" ng-click="vm.edit($event,note);" >
+        <md-tooltip>
+          Edit
+        </md-tooltip>
+        <md-icon md-font-set="fa fa-pencil fa-2x" class="nav"></md-icon>
+      </md-button>
+      <md-button class="md-fab md-warn" aria-label="Delete" ng-click="vm.confirmDelete($event,note);">
+        <md-tooltip>
+          Delete
+        </md-tooltip>
+        <md-icon md-font-set="fa fa-trash fa-2x" class="nav"></md-icon>
+      </md-button></span>
+      </div>
+    </md-card>
+
+    <md-card flex ng-repeat="ride in vm.driving.data.requests" ng-if="vm.driving.data">
+      <!--<img ng-src="{{test.image}}" class="md-card-image" alt="image">-->
+      <md-card-content>
+        <h2 class="md-title md-primary">Ride Info</h2>
+        <p  id="drivedescription"> Name : {{ride.by}} </p>
+        <p  id="drivedescription"> Gender :{{ride.gender}}</p>
+
+      </md-card-content>
+      <md-divider></md-divider>
+
+      <div class="md-actions" layout="row" layout-align="start start">
+        <footer class="tcs-card__footer" >
+          <!--<span class="icon"><i class="fa fa-clock-o"></i> {{note.created_on | date:'dd/mm/yyyy'}}</span>-->
+        </footer>
+      <span>
+      <md-button class="md-fab md-primary" aria-label="Share" >
+        <md-tooltip>
+          Approve
+        </md-tooltip>
+        <md-icon md-font-set="fa fa-check fa-2x" class="nav"></md-icon>
+      </md-button>
+      </span>
+      </div>
+    </md-card>
 </md-whiteframe>

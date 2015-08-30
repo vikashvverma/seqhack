@@ -1,13 +1,13 @@
 
 <md-whiteframe class="md-whiteframe-z1 " layout layout-pdding layout-align="center center">
   <md-content style="width:100%;background: inherit;">
-    <md-content layout="column" style=";z-index:111;width:100%;background:transparent;">
+    <md-content layout="column" style=";z-index:111;width:100%;background:transparent;" ng-if="!vm.requests.length">
 
 
-      <md-content layout-sm="column" layout-gt-sm="row">
+      <md-content layout-sm="column" layout-gt-sm="row" >
         <md-input-container class="input-field" flex>
           <input ng-model="vm.driver.src" id="source" type="text" class="validate" aria-label="Source"
-                 style="background-color:white;" placeholder="Enter Source">
+                 style="background-color:white;" >
           <label for="source" style="text-align:center;">Source</label>
         </md-input-container>
 
@@ -16,10 +16,62 @@
                  style="background-color:white;">
           <label for="source" style="text-align:center;">Destination</label>
         </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="vm.findRide($event);">Find</md-button>
       </md-content>
 
     </md-content>
     <!--<input id="pac-input" class="controls" type="text" placeholder="Search Box">-->
-    <div id="map" style="height:400px;margin-top:-79px;"></div>
+    <div id="map" style="height:400px;margin-top:-79px;" ng-if="!vm.requests.length"></div>
+    <md-card flex ng-repeat="ride in vm.riding.rides" ng-if="!vm.requests.length">
+      <!--<img ng-src="{{test.image}}" class="md-card-image" alt="image">-->
+      <md-card-content>
+        <h2 class="md-title md-primary">Ride Info</h2>
+        <p  id="drivedescription"> Name : {{ride.user.first_name}},{{ride.user.last_name}}</p>
+        <p  id="drivedescription"> Gender :{{ride.user.gender=='M'?'Male':'Female'}}</p>
+        <p  id="drivedescription"> From :{{ride.data.origin.formatted_address}} </p>
+        <p  id="drivedescription" > Via :<span ng-repeat="via in ride.data.waypoints">{{via.formatted_address}}<br/></span> </p>
+        <p  id="drivedescription"> To :{{ride.data.destination.formatted_address}} </p>
+
+      </md-card-content>
+      <md-divider></md-divider>
+
+      <div class="md-actions" layout="row" layout-align="start start">
+        <footer class="tcs-card__footer" >
+          <!--<span class="icon"><i class="fa fa-clock-o"></i> {{note.created_on | date:'dd/mm/yyyy'}}</span>-->
+        </footer>
+      <span>
+      <md-button class="md-fab md-primary" aria-label="Share" ng-click="vm.bookCab(ride.data._id);">
+        <md-tooltip>
+          Book
+        </md-tooltip>
+        <md-icon md-font-set="fa fa-share-alt fa-2x" class="nav"></md-icon>
+      </md-button>
+      </span>
+      </div>
+    </md-card>
+    <md-card flex ng-repeat="ride in vm.riding.rides" ng-if="vm.requests.length">
+      <!--<img ng-src="{{test.image}}" class="md-card-image" alt="image">-->
+      <md-card-content>
+        <h2 class="md-title md-primary">Ride Info</h2>
+        <p  id="drivedescription"> Name : {{ride.user.first_name}} {{ride.user.last_name}}</p>
+        <p  id="drivedescription"> Gender :{{ride.user.gender=='M'?'Male':'Female'}}</p>
+        <p  id="drivedescription"> From :{{ride.data.origin.formatted_address}} </p>
+        <p  id="drivedescription" > Via :<span ng-repeat="via in ride.data.waypoints">{{via.formatted_address}}<br/></span> </p>
+        <p  id="drivedescription"> To :{{ride.data.destination.formatted_address}} </p>
+
+      </md-card-content>
+      <md-divider></md-divider>
+
+      <div class="md-actions" layout="row" layout-align="start start">
+        <footer class="tcs-card__footer" >
+          <!--<span class="icon"><i class="fa fa-clock-o"></i> {{note.created_on | date:'dd/mm/yyyy'}}</span>-->
+        </footer>
+      <span>
+      <md-button class="md-raised md-primary" aria-label="Share" >
+        Waiting for Approval!
+      </md-button>
+      </span>
+      </div>
+    </md-card>
   </md-content>
 </md-whiteframe>

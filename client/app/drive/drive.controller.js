@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('rideshareApp')
-  .controller('DriverController', function ($scope, $location,$mdSidenav,$timeout,$q, Auth) {
+  .controller('DriverController', function ($scope, $location,$mdSidenav,$timeout,$interval,$q, Auth,DriveService,$log) {
 
     var vm = this;
     vm.isLoggedIn = Auth.isLoggedIn;
@@ -10,10 +10,58 @@ angular.module('rideshareApp')
     vm.geolocation={};
     vm.waypoints=[];
     vm.markers=[];
-    vm.driver={waypoints:[]};
+    vm.driver={waypoints:[],sharewith:'M'};
     vm.ids={};
     vm.map=null;
+    vm.drive=null;
+    vm.driving={status:false};
+    vm.count=0;
+    vm.getRide=function(){
+      DriveService.getRide(vm.getCurrentUser()._id).then(function(data){
+        $log.info(data);
+        if(vm.count){
+          vm.driving.data=data.data;
+          vm.driving.status=true;
+          return;
+        }
+        vm.driving.data=data.data;
+        vm.driving.status=true;
 
+        vm.getLocation();
+        vm.count+=1;
+      },function(err){
+        if(vm.count){return;}
+        vm.getLocation();
+        vm.count+=1;
+      });
+    };
+    var interval=$interval(function () {
+      vm.getRide();
+    },2000);
+    $scope.$on('$destroy', function() {
+      $interval.cancel(interval);
+    });
+    vm.getRide();
+    vm.createRide=function(){
+      if(!vm.drive || !vm.driver.seats || vm.driver.seats<=0 ){
+        DriveService.notify("All fields are necessary!",'error');
+        return;
+      }
+      vm.model={} ;
+      vm.model.origin={G:vm.drive.request.origin.G,K:vm.drive.request.origin.K};
+      vm.model.destination={G:vm.drive.request.destination.G,K:vm.drive.request.destination.K};;
+      vm.model.legs=vm.drive.routes[0].legs;
+      vm.model.sharewith=vm.driver.sahrewith;
+      vm.model.waypoints=vm.driver.waypoints;
+      vm.model.cab=[{vacantSeats:vm.driver.seats}];
+      vm.model.userId=vm.getCurrentUser()._id;
+      DriveService.createDrive(vm.model).then(function(data){
+        vm.driving.data=data;
+        vm.driving.status=true;
+      },function(err){
+        $log.error(err);
+      })
+    };
     vm.initMap=function(){
       vm.map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: position.lat || -33.8688, lng: position.lon || 151.2195},
@@ -139,33 +187,37 @@ angular.module('rideshareApp')
         }
         vm.driver.waypoints.push({
           location:places[0].address_components[0].short_name,
-          latlang:new google.maps.LatLng(places[0].geometry.location.G, places[0].geometry.location.K),
-          stopover: true
-
-
+          latlang:{G:places[0].geometry.location.G,K:places[0].geometry.location.K},
+          stopover: true,
+          formatted_address:places[0].formatted_address
         });
         vm.displayRoute(vm.directionsService, vm.directionsDisplay);
       });
       input.placeholder="";
     };
     vm.getWaypoints=function(){
-      var length=vm.driver.waypoints.length;
+      var length=vm.driver.waypoints.length || vm.driving.data.waypoints.length ;
       var waypts=[];
+      var ways=vm.driver.waypoints.length?vm.driver.waypoints:vm.driving.data.waypoints;
       for(var i=0;i<length;i++){
-        waypts.push({location:vm.driver.waypoints[i].location, stopover: true});
+        waypts.push({location:new google.maps.LatLng(ways[i].latlang.G, ways[i].latlang.K), stopover: true});
       }
       return waypts;
     };
     vm.displayRoute=function(directionsService, directionsDisplay){
-      if(!vm.driver.src || !vm.driver.destination){return;}
+      if(!vm.driver.src || !vm.driver.destination ){
+        if(!vm.driving.status)
+        return;
+      }
       directionsService.route({
-        origin: vm.driver.source,
-        destination: vm.driver.destination,
+        origin: vm.driver.source || new google.maps.LatLng(vm.driving.data.origin.G,vm.driving.data.origin.K),
+        destination: vm.driver.destination || new google.maps.LatLng(vm.driving.data.destination.G,vm.driving.data.destination.K),
         waypoints:vm.getWaypoints() ,
         travelMode: google.maps.TravelMode.DRIVING
       }, function(response, status) {
         if (status === google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
+          vm.drive=response;
         } else {
           //window.alert('Directions request failed due to ' + status);
         }
@@ -185,6 +237,7 @@ angular.module('rideshareApp')
         vm.setMap(vm.geolocation);
       }
       function showError(error) {
+        vm.setMap({});
         //switch(error.code) {
         //  case error.PERMISSION_DENIED:
         //    x.innerHTML = "User denied the request for Geolocation."
@@ -206,6 +259,7 @@ angular.module('rideshareApp')
       var directionsDisplay = new google.maps.DirectionsRenderer;
       vm.directionsService=directionsService;
       vm.directionsDisplay=directionsDisplay;
+      directionsDisplay.setPanel(document.getElementById('drivedescription'));
       var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: position.lat || -33.8688, lng: position.lon || 151.2195},
         zoom: 13,
@@ -213,9 +267,14 @@ angular.module('rideshareApp')
       });
       vm.map=map;
       directionsDisplay.setMap(vm.map);
-      vm.setSource();
-      vm.setDestination();
-      vm.searchLocation();
+      if(vm.driving.status){
+        vm.displayRoute(directionsService, directionsDisplay);
+      }else{
+        vm.setSource();
+        vm.setDestination();
+        vm.searchLocation();
+      }
+
       $scope.$watch('vm.driver.source',function(newVal){
         if(!newVal) return;
         //  vm.displayRoute(directionsService, directionsDisplay);
@@ -225,107 +284,5 @@ angular.module('rideshareApp')
         //  vm.displayRoute(directionsService, directionsDisplay);
       });
 
-
-      // Create the search box and link it to the UI element.
-      //var input = document.getElementById('source');
-      //vm.ids.src = new google.maps.places.SearchBox(input);
-      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-      //var target = document.getElementById('target');
-      //vm.ids.dest = new google.maps.places.SearchBox(target);
-
-      // Bias the SearchBox results towards current map's viewport.
-      //map.addListener('bounds_changed', function() {
-      //  vm.ids.src.setBounds(map.getBounds());
-      //});
-
-      //map.addListener('bounds_changed', function() {
-      //  vm.ids.dest.setBounds(map.getBounds());
-      //});
-
-      //vm.addListeners(map,vm.ids.src);
-      //vm.addListeners(map,vm.ids.dest);
     };
-    vm.addListeners=function(map,input){
-      var markers = [];
-      // Listen for the event fired when the user selects a prediction and retrieve
-      // more details for that place.
-      input.addListener('places_changed', function() {
-        var places = input.getPlaces();
-
-        if (places.length == 0) {
-          return;
-        }
-
-        // Clear out the old markers.
-        markers.forEach(function(marker) {
-          marker.setMap(null);
-        });
-        markers = [];
-
-        // For each place, get the icon, name and location.
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          var icon = {
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
-
-          // Create a marker for each place.
-          markers.push(new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
-          }));
-
-          if (place.geometry.viewport) {
-            // Only geocodes have viewport.
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-        map.fitBounds(bounds);
-      });
-    };
-
-    vm.drawRoute=function(){
-
-    };
-
-
-    vm.logout = function () {
-      Auth.logout();
-      $location.path('/login');
-    };
-    vm.toggleSidenav = function(menuId) {
-      $mdSidenav(menuId).toggle();
-    };
-    vm.mainMenu = [
-      {
-        icon: "fa fa-lock fa-2x",
-        title: "Profile",
-        tooltip: "Verbal Test",
-        url: 'main.verbal'
-      },
-      {
-        icon: "fa fa-lock fa-2x",
-        title: "Aptitude",
-        tooltip: "Aptitude Test",
-        url: 'main.aptitude'
-      }
-    ];
-    vm.extraMenu=[{
-      icon: "fa fa-info-circle fa-2x",
-      title: "About",
-      tooltip: "About Us",
-      url:'main.aboutus'
-    }
-    ];
-    $timeout(vm.getLocation,1000);
-    vm.addWatchers();
   });
